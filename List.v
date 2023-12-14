@@ -6,41 +6,32 @@ module list (
     input [3:0] comp2,
     input [2:0] i,
     input [2:0] j,
-    output reg [20:0] data
+    output reg [16:0] data
 );
 
 localparam MATRIX_SIZE = 256;
 localparam BIT_NUMBERS = 4;
-localparam MAX_SHIFTING = 7;
+localparam MAX_SHIFTING = 4;
+localparam ROM_DATA = 3;
 
-// wire [BIT_NUMBERS * 2 + 6 - 1:0] address;
-// assign address = {comp1, comp2, i, j};
+wire [(BIT_NUMBERS * 2) - 1 :0] address;
+assign address = {comp1, comp2};
 
-// reg [BIT_NUMBERS * 2 + 6 * 2:0] memory [(MATRIX_SIZE)-1:0];
-// initial $readmemb("E:/Project/IDEA/SystolicArray/listv2.txt", memory);
-
-// wire [14:0] data_reg;
-// assign data_reg = memory[address];
-
-
-wire [BIT_NUMBERS - 1:0] address;
-assign address = comp1 & comp2;
-
-wire [3:0] shifting;
+wire [MAX_SHIFTING - 1 :0] shifting;
 assign shifting = i + j;
 
-reg [20 :0] memory [(MATRIX_SIZE)-1:0];
+reg [ROM_DATA - 1 :0] memory [(MATRIX_SIZE)-1:0];
 initial $readmemb("E:/Project/IDEA/SystolicArray/listv1.txt", memory);
 
 
-wire [(BIT_NUMBERS - 1) * 2:0] data_reg;
+wire [ROM_DATA - 1 :0] data_reg;
 assign data_reg = memory[address];
 
 always @(posedge clk) begin
     if (address < MATRIX_SIZE) begin
         data <= data_reg << shifting;
     end else begin
-        data <= 9'b0;
+        data <= 17'b0;
     end
 end
 
