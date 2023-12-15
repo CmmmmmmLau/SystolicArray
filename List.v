@@ -20,12 +20,24 @@ assign address = {comp1, comp2};
 wire [MAX_SHIFTING - 1 :0] shifting;
 assign shifting = i + j;
 
-reg [ROM_DATA - 1 :0] memory [(MATRIX_SIZE)-1:0];
-initial $readmemb("E:/Project/IDEA/SystolicArray/listv3.txt", memory);
+// reg [ROM_DATA - 1 :0] memory [(MATRIX_SIZE)-1:0];
+// initial $readmemb("E:/Project/IDEA/SystolicArray/listv3.txt", memory);
 
+// wire [ROM_DATA - 1 :0] data_reg;
+// assign data_reg = memory[address];
 
 wire [ROM_DATA - 1 :0] data_reg;
-assign data_reg = memory[address];
+dist_mem_gen_0 list_ip (
+    .a(address),
+    .spo(data_reg)
+);
+
+// wire [ROM_DATA - 1 :0] data_reg;
+// blk_mem_gen_0 list_ip (
+//     .clka(clk),
+//     .addra(address),
+//     .douta(data_reg)
+// );
 
 always @(posedge clk) begin
     if (address < MATRIX_SIZE) begin

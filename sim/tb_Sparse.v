@@ -3,7 +3,7 @@
 module tb_Sparse;
 
 // parameters
-parameter CLK_PERIOD = 10;
+parameter CLK_PERIOD = 8;
 
 // reg declarations
 reg clk;
@@ -32,15 +32,15 @@ initial begin
   // initialize regs
   clk = 0;
   rst = 1;
-  Vector_A = 128'hffffffffffffffffffffffffffffffff;
-  Vector_B = 128'hffffffffffffffffffffffffffffffff;
-  
+  #100
   // apply reset
   #CLK_PERIOD rst = 0;
-
+  #50
+  Vector_A = 128'hffffffffffffffffffffffffffffffff;
+  Vector_B = 128'hffffffffffffffffffffffffffffffff;
   // change inputs
-//  #CLK_PERIOD Vector_A = 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
-//  #CLK_PERIOD Vector_B = 128'h00000000000000000000000000000000;
+  //  #CLK_PERIOD Vector_A = 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+  //  #CLK_PERIOD Vector_B = 128'h00000000000000000000000000000000;
 
   // more test vectors can be added here...
 end
